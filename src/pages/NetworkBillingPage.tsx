@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Download, Filter, RefreshCw } from "lucide-react";
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
@@ -26,6 +25,9 @@ import {
   AreaChart,
   Area,
 } from "recharts";
+import { TrendsCharts } from "@/components/network-billing/TrendsCharts";
+import { ServiceTypeChart } from "@/components/network-billing/ServiceTypeChart";
+import { RegionalChart } from "@/components/network-billing/RegionalChart";
 
 // Sample data
 const networkBillingMonthly = [
@@ -149,101 +151,15 @@ export default function NetworkBillingPage() {
         </TabsList>
         
         <TabsContent value="trends">
-          <ChartCard 
-            title="Monthly Network vs Billing Comparison" 
-            description="Usage volume tracked in network vs charged in billing systems"
-            action={
-              <Button variant="outline" size="sm">
-                <Filter size={16} className="mr-2" />
-                Filter
-              </Button>
-            }
-          >
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={networkBillingMonthly}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="network" name="Network Usage" fill="#2563eb" />
-                  <Bar dataKey="billing" name="Billed Usage" fill="#0ea5e9" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </ChartCard>
-          
-          <div className="mt-6">
-            <ChartCard 
-              title="Discrepancy Trend" 
-              description="Difference between network usage and billing records over time"
-            >
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={networkBillingMonthly}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line 
-                      type="monotone" 
-                      dataKey="difference" 
-                      name="Discrepancy" 
-                      stroke="#f43f5e" 
-                      strokeWidth={2} 
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </ChartCard>
-          </div>
+          <TrendsCharts monthlyData={networkBillingMonthly} />
         </TabsContent>
         
         <TabsContent value="services">
-          <ChartCard 
-            title="Discrepancies by Service Type" 
-            description="Network vs billing differences across service categories"
-          >
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={serviceTypeData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="network" name="Network Usage" fill="#2563eb" />
-                  <Bar dataKey="billing" name="Billed Usage" fill="#0ea5e9" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </ChartCard>
+          <ServiceTypeChart data={serviceTypeData} />
         </TabsContent>
         
         <TabsContent value="regions">
-          <ChartCard 
-            title="Discrepancies by Region" 
-            description="Distribution of billing discrepancies across geographic regions"
-          >
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={discrepanciesByRegion}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Area 
-                    type="monotone" 
-                    dataKey="value" 
-                    name="Discrepancy Value" 
-                    fill="#8b5cf6" 
-                    stroke="#8b5cf6" 
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
-          </ChartCard>
+          <RegionalChart data={discrepanciesByRegion} />
         </TabsContent>
       </Tabs>
 
