@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import NetworkBillingPage from "./pages/NetworkBillingPage";
 import NotFound from "./pages/NotFound";
+import MediationComparisonPage from "./pages/MediationComparisonPage";
 
 const queryClient = new QueryClient();
 
@@ -26,7 +27,7 @@ const App = () => (
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/network-billing" element={<NetworkBillingPage />} />
-            {/* Other routes to be added as we develop more pages */}
+            <Route path="/mediation-comparison" element={<MediationComparisonPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
