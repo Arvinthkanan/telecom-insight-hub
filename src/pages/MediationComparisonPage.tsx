@@ -1,27 +1,13 @@
 
 import { useState } from "react";
-import { Filter, Download } from "lucide-react";
+import { Filter } from "lucide-react";
 import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
-import { ChartCard } from "@/components/dashboard/ChartCard";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { DateRangeFilter } from "@/components/mediation/DateRangeFilter";
+import { FrequencyFilter } from "@/components/mediation/FrequencyFilter";
+import { StatisticCard } from "@/components/mediation/StatisticCard";
+import { ExceptionsChart } from "@/components/mediation/ExceptionsChart";
+import { ComparisonChart } from "@/components/mediation/ComparisonChart";
 
 // Sample data
 const monthlyData = [
@@ -52,36 +38,17 @@ export default function MediationComparisonPage() {
           </h1>
           
           <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-2">
-              <label className="text-sm">From Date:</label>
-              <Input
-                type="date"
-                value={fromDate}
-                onChange={(e) => setFromDate(e.target.value)}
-                className="w-40"
-              />
-            </div>
+            <DateRangeFilter
+              fromDate={fromDate}
+              toDate={toDate}
+              onFromDateChange={setFromDate}
+              onToDateChange={setToDate}
+            />
             
-            <div className="flex items-center gap-2">
-              <label className="text-sm">To Date:</label>
-              <Input
-                type="date"
-                value={toDate}
-                onChange={(e) => setToDate(e.target.value)}
-                className="w-40"
-              />
-            </div>
-            
-            <Select value={frequency} onValueChange={setFrequency}>
-              <SelectTrigger className="w-32">
-                <SelectValue placeholder="Frequency" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="daily">Daily</SelectItem>
-                <SelectItem value="weekly">Weekly</SelectItem>
-                <SelectItem value="monthly">Monthly</SelectItem>
-              </SelectContent>
-            </Select>
+            <FrequencyFilter
+              frequency={frequency}
+              onFrequencyChange={setFrequency}
+            />
             
             <Button variant="secondary">
               <Filter className="w-4 h-4 mr-2" />
@@ -95,49 +62,21 @@ export default function MediationComparisonPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="p-4 rounded-lg bg-destructive/10 border border-destructive flex items-center justify-between">
-            <span className="text-destructive font-semibold">% Unmatched Count</span>
-            <span className="text-2xl font-bold text-destructive">47.26%</span>
-          </div>
-          
-          <div className="p-4 rounded-lg bg-green-500/10 border border-green-500 flex items-center justify-between">
-            <span className="text-green-600 font-semibold">% Repeated Count</span>
-            <span className="text-2xl font-bold text-green-600">0.00%</span>
-          </div>
+          <StatisticCard 
+            label="% Unmatched Count"
+            value="47.26%"
+            isPositive={false}
+          />
+          <StatisticCard 
+            label="% Repeated Count"
+            value="0.00%"
+            isPositive={true}
+          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <ChartCard
-            title="Exceptions"
-            className="min-h-[400px]"
-          >
-            <ResponsiveContainer width="100%" height={350}>
-              <BarChart data={exceptionsData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="category" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="value" fill="#818cf8" />
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartCard>
-
-          <ChartCard
-            title="Total Count/Exception Count"
-            className="min-h-[400px]"
-          >
-            <ResponsiveContainer width="100%" height={350}>
-              <BarChart data={monthlyData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="totalCount" name="Total Count" fill="#818cf8" />
-                <Bar dataKey="exceptionCount" name="Exception Count" fill="#4ade80" />
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartCard>
+          <ExceptionsChart data={exceptionsData} />
+          <ComparisonChart data={monthlyData} />
         </div>
       </div>
     </DashboardLayout>
