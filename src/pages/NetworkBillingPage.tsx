@@ -78,9 +78,11 @@ export default function NetworkBillingPage() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 animate-fade-in">
         <div>
-          <h1 className="text-3xl font-bold">Network vs Billing Analysis</h1>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            Network vs Billing Analysis
+          </h1>
           <p className="text-muted-foreground mt-1">
             Compare network usage data with billing records to identify discrepancies
           </p>
@@ -88,7 +90,7 @@ export default function NetworkBillingPage() {
         
         <div className="flex items-center gap-2">
           <Select defaultValue={timeRange} onValueChange={setTimeRange}>
-            <SelectTrigger className="w-[140px]">
+            <SelectTrigger className="w-[140px] bg-secondary/10 border-secondary/20">
               <SelectValue placeholder="Select period" />
             </SelectTrigger>
             <SelectContent>
@@ -99,12 +101,20 @@ export default function NetworkBillingPage() {
             </SelectContent>
           </Select>
           
-          <Button variant="outline" onClick={refreshData} disabled={loading}>
+          <Button 
+            variant="outline" 
+            onClick={refreshData} 
+            disabled={loading}
+            className="bg-secondary/10 border-secondary/20 hover:bg-secondary/20"
+          >
             <RefreshCw size={16} className={`mr-2 ${loading ? "animate-spin" : ""}`} />
             Refresh
           </Button>
           
-          <Button variant="outline">
+          <Button 
+            variant="outline"
+            className="bg-secondary/10 border-secondary/20 hover:bg-secondary/20"
+          >
             <Download size={16} className="mr-2" />
             Export
           </Button>
@@ -112,30 +122,30 @@ export default function NetworkBillingPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
-          <h3 className="text-lg font-medium mb-1">Total Network Usage</h3>
-          <div className="text-3xl font-bold">65.2 TB</div>
-          <div className="text-sm text-muted-foreground mt-1">Across all services</div>
+        <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+          <h3 className="text-lg font-medium mb-1 text-blue-600">Total Network Usage</h3>
+          <div className="text-3xl font-bold text-blue-700">65.2 TB</div>
+          <div className="text-sm text-blue-600/80 mt-1">Across all services</div>
         </div>
         
-        <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
-          <h3 className="text-lg font-medium mb-1">Total Billed Usage</h3>
-          <div className="text-3xl font-bold">62.1 TB</div>
-          <div className="text-sm text-muted-foreground mt-1">From billing records</div>
+        <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+          <h3 className="text-lg font-medium mb-1 text-purple-600">Total Billed Usage</h3>
+          <div className="text-3xl font-bold text-purple-700">62.1 TB</div>
+          <div className="text-sm text-purple-600/80 mt-1">From billing records</div>
         </div>
         
-        <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
-          <h3 className="text-lg font-medium mb-1">Discrepancy</h3>
-          <div className="text-3xl font-bold text-destructive">3.1 TB (4.8%)</div>
-          <div className="text-sm text-muted-foreground mt-1">Potential revenue leakage</div>
+        <div className="bg-gradient-to-br from-red-500/10 to-orange-500/10 border border-red-500/20 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+          <h3 className="text-lg font-medium mb-1 text-red-600">Discrepancy</h3>
+          <div className="text-3xl font-bold text-red-700">3.1 TB (4.8%)</div>
+          <div className="text-sm text-red-600/80 mt-1">Potential revenue leakage</div>
         </div>
       </div>
 
       <Tabs defaultValue="trends" className="mb-8">
-        <TabsList className="mb-6">
-          <TabsTrigger value="trends">Trends</TabsTrigger>
-          <TabsTrigger value="services">By Service</TabsTrigger>
-          <TabsTrigger value="regions">By Region</TabsTrigger>
+        <TabsList className="mb-6 bg-secondary/10 border border-secondary/20">
+          <TabsTrigger value="trends" className="data-[state=active]:bg-secondary/20">Trends</TabsTrigger>
+          <TabsTrigger value="services" className="data-[state=active]:bg-secondary/20">By Service</TabsTrigger>
+          <TabsTrigger value="regions" className="data-[state=active]:bg-secondary/20">By Region</TabsTrigger>
         </TabsList>
         
         <TabsContent value="trends">
