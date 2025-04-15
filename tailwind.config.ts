@@ -61,7 +61,16 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+        // Telecom theme colors
+        telecom: {
+          blue: '#2563eb',
+          sky: '#0ea5e9',
+          emerald: '#10b981',
+          orange: '#f97316',
+          purple: '#8b5cf6',
+          pink: '#ec4899',
+        }
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
